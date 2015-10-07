@@ -5,7 +5,6 @@ from app import engine
 from flask import Flask
 from datetime import timedelta
 from alchemyapi import AlchemyAPI
-import IPython
 
 # celery = Celery('app', broker='amqp://guest@localhost//')
 def make_celery(app):

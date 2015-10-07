@@ -1,7 +1,6 @@
 import csv
 from swocker import db
 from models import *
-import IPython
 import os
 
 def find_relevant_key(name):

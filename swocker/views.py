@@ -1,6 +1,4 @@
 from flask import Flask, flash, jsonify, render_template
-import IPython
-
 from swocker import app, engine, company, sentiment
 from swocker.models import *
 import json
