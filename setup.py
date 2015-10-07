@@ -1,4 +1,8 @@
+import os
 from setuptools import setup
+
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
 
 setup(name='Swocker',
       version='1.0',
@@ -6,5 +10,5 @@ setup(name='Swocker',
       author='SIGIR Squad',
       author_email='',
       url='http://www.python.org/sigs/distutils-sig/',
-     install_requires=['Flask>=0.10.1'],
+     install_requires=required,
      )
