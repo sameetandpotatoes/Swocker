@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+	<head>
+	  <title>Swocker</title>
+	  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/reset.css') }}">
+	  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+	  <link href="https://fonts.googleapis.com/css?family=Raleway|Source+Sans+Pro" rel="stylesheet" type="text/css">
+	  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/main.js')}}"></script>
+	</head>
+	<body>
+		<header>
+			<h1><a href="/">Swocker</a></h1>
+			<div class="searchBox">
+				<input type="search" id="search" placeholder="Enter a company name" />
+				<span class="fa fa-search search-icon"></span>
+				<div class="btn search">Search</div>
+			</div>
+		</header>
+    <div id="div1"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8" async defer></script>
+    <script>
+      $(document).ready(function(){
+        $.ajax({
+          method: "GET",
+          url: "/company/apple",
+          success: function(result){
+              $("#div1").html(result);
+          }
+        });
+      });
+    </script>
+	</body>
+</html>

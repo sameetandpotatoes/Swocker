@@ -1,0 +1,103 @@
+header {
+  display: inline-flex;
+  border-bottom: 20px solid #019FE9;
+  width: 100%;
+  padding: 0.5em 0;
+}
+header > h1{
+  font-size: 2.5em;
+  font-weight: lighter;
+  font-family: 'Raleway';
+  margin-left: 0.5em;
+}
+header > .searchBox{
+  margin-left: 1em;
+}
+header > .searchBox > input{
+  width: 800px;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.center .container{
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  margin-top: -5%;
+  text-align: center;
+  position: fixed;
+  font-family: 'Raleway';
+}
+.center .container h1{
+  padding-bottom: 0.3em;
+  font-size: 3.0em;
+}
+
+.searchBox > input{
+  padding: 1em;
+  width: 350px;
+  border: solid 1px #E5E5E5;
+  outline: 0;
+  font: 0.8em 'Source Sans Pro';
+  background: #FFFFFF;
+  border-color: #D3D3D3;
+  transition: 0.3s all ease-in-out;
+  -webkit-transition: 0.3s all ease-in-out;
+}
+/* Removes annoying icon on input */
+.searchBox > input::-ms-clear {
+  display: none;
+}
+.searchBox > .fa{
+  position: relative;
+  top: 0px;
+  left: -25px;
+  color: #D3D3D3;
+  transition: 0.3s all ease-in-out;
+  -webkit-transition: 0.3s all ease-in-out;
+}
+
+.btn{
+  background-color: #019FE9;
+  color: white;
+  font-family: 'Raleway';
+  padding: 0.85em;
+  font-size: 1em;
+  transition: 0.3s all ease-in-out;
+  -webkit-transition: 0.3s all ease-in-out;
+}
+
+.search.btn{
+  margin-left: -25px; /* Same as the left position of the button */
+  vertical-align: bottom;
+}
+
+.searchBox, .btn{
+  display: inline-block;
+}
+
+.btn:hover{
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+input:hover, input:focus{
+  border-color: #019FE9;
+}
+
+input:focus + .fa{
+  color: #019FE9;
+}
+
+.flash {
+  background-color: #FFCDD2;
+  margin: 1em;
+  padding: 0.75em;
+  border: 1px solid #E57373;
+  border-radius: 3px;
+  color: #B71C1C;
+  font-family: 'Source Sans Pro';
+  font-size: 1.2em;
+}
