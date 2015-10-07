@@ -64,4 +64,4 @@ You won't see anything for a day or so (you can change the frequency of the task
 
 - `Ctrl + D` to exit the shell
 
-- Then run the app with `python run.py`. You'll see data instantly for the companies that we have tweets for!
+- Then run the app with `python app.py`. You'll see data instantly for the companies that we have tweets for!
