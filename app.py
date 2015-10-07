@@ -11,14 +11,14 @@ import sys
 
 try:
   virtenv = os.path.join(os.environ.get('OPENSHIFT_PYTHON_DIR','.'), 'virtenv')
-  python_version = "python"+str(sys.version_info[0])+"."+str(sys.version_info[1]) 
+  python_version = "python"+str(sys.version_info[0])+"."+str(sys.version_info[1])
   os.environ['PYTHON_EGG_CACHE'] = os.path.join(virtenv, 'lib', python_version, 'site-packages')
   virtualenv = os.path.join(virtenv, 'bin','activate_this.py')
   if(sys.version_info[0] < 3):
     execfile(virtualenv, dict(__file__=virtualenv))
   else:
     exec(open(virtualenv).read(), dict(__file__=virtualenv))
-    
+
 except IOError:
   pass
 
@@ -32,7 +32,9 @@ except IOError:
 #  main():
 #
 if __name__ == '__main__':
-  application = imp.load_source('app', 'flaskapp.py')
+  # from app import app as application
+  sys.path.insert(0, os.path.abspath(".."))
+  application = imp.load_source('app', 'swocker/views.py')
   port = application.app.config['PORT']
   ip = application.app.config['IP']
   app_name = application.app.config['APP_NAME']
