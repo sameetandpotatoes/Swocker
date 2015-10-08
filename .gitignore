@@ -1,3 +1,4 @@
 swocker/secrets.py
 *.pyc
 .DS_Store
+app.db
