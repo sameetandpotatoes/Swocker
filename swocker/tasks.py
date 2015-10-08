@@ -1,7 +1,5 @@
 from celery import Celery
-from app import db
-from app import models
-from app import engine
+from swocker import db, models, engine
 from flask import Flask
 from datetime import timedelta
 from alchemyapi import AlchemyAPI
