@@ -8,13 +8,14 @@ header > h1{
   font-size: 2.5em;
   font-weight: lighter;
   font-family: 'Raleway';
-  margin-left: 0.5em;
+  margin: 0 0.5em;
+  width: 200px;
 }
 header > .searchBox{
-  margin-left: 1em;
+  width: 80%;
 }
 header > .searchBox > input{
-  width: 800px;
+  width: 100%;
 }
 a {
   text-decoration: none;
@@ -32,7 +33,7 @@ a {
 }
 .center .container h1{
   padding-bottom: 0.3em;
-  font-size: 3.0em;
+  font-size: 5.0em;
 }
 
 .searchBox > input{
@@ -43,6 +44,7 @@ a {
   font: 0.8em 'Source Sans Pro';
   background: #FFFFFF;
   border-color: #D3D3D3;
+  margin-right: 0.4em;
   transition: 0.3s all ease-in-out;
   -webkit-transition: 0.3s all ease-in-out;
 }
@@ -52,8 +54,8 @@ a {
 }
 .searchBox > .fa{
   position: relative;
-  top: 0px;
-  left: -25px;
+  top: 15px;
+  left: -30px;
   color: #D3D3D3;
   transition: 0.3s all ease-in-out;
   -webkit-transition: 0.3s all ease-in-out;
@@ -75,7 +77,7 @@ a {
 }
 
 .searchBox, .btn{
-  display: inline-block;
+  display: inline-flex;
 }
 
 .btn:hover{
@@ -106,4 +108,16 @@ svg{
   display: block;
   margin: 0 auto;
   padding: 2em;
+}
+.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 200px;
+  height: 50;
+  padding: 0.2em;
+  font: 0.95em 'Source Sans Pro';
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 4px;
+  pointer-events: none;
 }

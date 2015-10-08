@@ -22,14 +22,30 @@ def graph(company_code):
         company_json['date'] = company_tweet.date
         tweet_data.append(company_json)
 
-    company_data = json.loads(engine.get_share_history(key, '2015-09-28', '2015-10-07'))
+    company_data = {}
+
+    if len(tweets) > 0:
+        min_date = tweets[0].date
+        max_date = tweets[len(tweets) - 1].date
+        company_data = json.loads(engine.get_share_history(key, min_date, max_date))
+        min_stock = 1000000
+        max_stock = 0
+        company_json = {}
+        for stock_day in company_data:
+            stock_val = float(stock_day["Close"])
+            if stock_val > max_stock:
+                max_stock = stock_val
+            if stock_val < min_stock:
+                min_stock = stock_val
+        company_json["max"] = max_stock
+        company_json["min"] = min_stock
+        company_json['history'] = company_data
+        company_data = company_json
+
     result = {'tweets': tweet_data, 'stocks': company_data }
     return render_template('graph.html', data=json.dumps(result))
 
-@app.route('/graph')
-def graph_view():
-    return render_template('graph.html')
-
+#Actually never needed, kept for fun I guess?
 @app.route('/symbol/<company_symbol>/')
 def get_stock_info(company_symbol):
 	return engine.get_share_price(company_symbol)
