@@ -6,7 +6,7 @@
 	  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
 	  <link href="https://fonts.googleapis.com/css?family=Raleway|Source+Sans+Pro" rel="stylesheet" type="text/css">
 	  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-	  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	  <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='js/main.js')}}"></script>
 	</head>
 	<body>
@@ -18,18 +18,55 @@
 				<div class="btn search">Search</div>
 			</div>
 		</header>
-    <div id="div1"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8" async defer></script>
-    <script>
-      $(document).ready(function(){
-        $.ajax({
-          method: "GET",
-          url: "/company/apple",
-          success: function(result){
-              $("#div1").html(result);
-          }
-        });
-      });
+    <div id="div1" style="display: none;">{{data}}</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+			$(document).ready(function(){
+				var padding = 200;
+
+				var w = $(document).width() - padding;
+				var h = $(document).height() - padding;
+
+				var scale = d3.scale.linear()
+													.domain([100, 500])
+													.range([10, 350]);
+
+				var tweets = JSON.parse($("#div1").text())["tweets"];
+
+				var min_date = Date.parse(tweets[0]["date"]);
+				var max_date = Date.parse(tweets[tweets.length - 1]["date"]);
+
+				var xScale = d3.time.scale().domain([min_date, max_date]).range([0, w]);
+				var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+				var yScale = d3.scale.linear().domain([-1, 1]).range([h, 0]);
+				var yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+				var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height",h);
+
+				svg.selectAll('circle')
+					.data(tweets)
+					.enter()
+					.append("circle")
+					.attr("cx", function(d) { return xScale(Date.parse(d["date"])); })
+					.attr("cy", function(d) { return yScale(d["sentiment"]); })
+					.attr("r", 5);
+				svg.selectAll("text")
+					.data(tweets)
+					.enter()
+					.append("text")
+					.text(function(d) { return d["sentiment"]; })
+					.attr("x", function(d) { return xScale(Date.parse(d["date"])) - 50; })
+					.attr("y", function(d) { return yScale(d["sentiment"]) + 5; })
+					.attr("font-family", "Source Sans Pro")
+					.attr("font-size", "1.0em")
+					.attr("fill", "#D3");
+
+				svg.append("g").attr("class", "axis").attr("transform", "translate(0," + h + ")").call(xAxis);
+				svg.append("g").attr("class", "axis").attr("transform", "translate(" + 0 + ",0)").call(yAxis);
+			});
     </script>
 	</body>
 </html>

@@ -2,6 +2,7 @@ from TwitterAPI import TwitterAPI
 from alchemyapi import AlchemyAPI
 from yahoo_finance import Share
 import json
+import IPython
 import requests
 import secrets
 import random
