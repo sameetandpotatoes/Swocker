@@ -4,7 +4,6 @@ from flask import Flask
 from datetime import timedelta
 from alchemyapi import AlchemyAPI
 
-# celery = Celery('app', broker='amqp://guest@localhost//')
 def make_celery(app):
     celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'])
     celery.conf.update(app.config)
@@ -42,18 +41,12 @@ app.config.update(
 celery = make_celery(app)
 
 @celery.task()
-def add(x, y):
-    print(x + y)
-    return x + y
-
-@celery.task()
 def store_tweets_in_database():
     for company in models.Company.query.filter(models.Company.retrieved_data==False).all():
+        company_id_start = company.id
         print "---\nLooking at " + company.name + "\n---\n"
-
         tweets, tweets_list = engine.twit_search(company.name)
         if tweets is None:
-            company_id_start = company.id
             print "Twitter api is overused"
             print "---\nStopping at company " + str(company_id_start) + " : " + company.name + "\n---\n"
             return
@@ -80,27 +73,6 @@ def store_tweets_in_database():
     # at the end set them all back to false
     for company in models.Company.query.all():
         company.retrieved_data = False
-
-def generate_concepts_for_company(company_id, tweets):
-    all_tweets_as_string = ' '.join(tweets)
-    alchemyapi = AlchemyAPI()
-    api_error = False
-    for apikey in engine.get_random_alchemy_credentials():
-        alchemyapi.apikey = apikey
-        response = alchemyapi.concepts('text', all_tweets_as_string)
-        related_words = []
-        if response['status'] == 'OK':
-            for concept in response['concepts']:
-                related_words.append(concept['text'])
-        elif response['status'] == 'ERROR' and tweets != []:
-            print "ERROR getting concepts" + response['statusInfo']
-            api_error = True
-            # Move onto the next api key
-            continue
-    # Return null when all api keys are exhausted
-    if api_error and len(related_words) == 0:
-        return None
-    return related_words
 
 def store_sentiment_for_tweet(company_id, tweet):
     sentiment = get_sentiment(company_id, tweet['text'])
@@ -147,3 +119,24 @@ def get_sentiment(company_id, text):
             return 0
     #Return none when all api keys are exhausted
     return None
+
+def generate_concepts_for_company(company_id, tweets):
+    all_tweets_as_string = ' '.join(tweets)
+    alchemyapi = AlchemyAPI()
+    api_error = False
+    for apikey in engine.get_random_alchemy_credentials():
+        alchemyapi.apikey = apikey
+        response = alchemyapi.concepts('text', all_tweets_as_string)
+        related_words = []
+        if response['status'] == 'OK':
+            for concept in response['concepts']:
+                related_words.append(concept['text'])
+        elif response['status'] == 'ERROR' and tweets != []:
+            print "ERROR getting concepts" + response['statusInfo']
+            api_error = True
+            # Move onto the next api key
+            continue
+    # Return null when all api keys are exhausted
+    if api_error and len(related_words) == 0:
+        return None
+    return related_words
