@@ -4,7 +4,7 @@ from yahoo_finance import Share
 import json
 import IPython
 import requests
-from swocker import secrets
+import secrets
 import random
 import urllib
 import datetime
