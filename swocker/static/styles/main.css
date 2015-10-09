@@ -100,22 +100,22 @@ input:focus + .fa{
   border: 1px solid #E57373;
   border-radius: 3px;
   color: #B71C1C;
-  font-family: 'Source Sans Pro';
-  font-size: 1.2em;
+  font: 1.2em 'Source Sans Pro';
 }
 
 svg{
   display: block;
   margin: 0 auto;
-  padding: 2em;
+  padding: 2em 4em;
+  font: 1em 'Source Sans Pro';
 }
 .tooltip {
   position: absolute;
   text-align: center;
   width: 200px;
-  height: 50;
+  height: auto;
   padding: 0.2em;
-  font: 0.95em 'Source Sans Pro';
+  font: 1em 'Source Sans Pro';
   background: lightsteelblue;
   border: 0px;
   border-radius: 4px;
