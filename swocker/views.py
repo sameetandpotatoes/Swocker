@@ -1,5 +1,5 @@
 from flask import Flask, flash, jsonify, render_template
-from swocker import app, engine, company, sentiment
+from swocker import app, engine, company, sentiment, tasks
 from swocker.models import *
 import json
 import IPython
@@ -31,6 +31,7 @@ def graph(company_code):
         min_stock = 1000000
         max_stock = 0
         company_json = {}
+        # Get max and min stock for the d3.js graph
         for stock_day in company_data:
             stock_val = float(stock_day["Close"])
             if stock_val > max_stock:
@@ -41,15 +42,8 @@ def graph(company_code):
         company_json["min"] = min_stock
         company_json['history'] = company_data
         company_data = company_json
+    elif tasks.store_tweets_by_company_id(queried_company.id):
+        self.graph(company_code)
 
     result = {'tweets': tweet_data, 'stocks': company_data }
     return render_template('graph.html', data=json.dumps(result))
-
-#Actually never needed, kept for fun I guess?
-@app.route('/symbol/<company_symbol>/')
-def get_stock_info(company_symbol):
-	return engine.get_share_price(company_symbol)
-
-@app.route('/history/<company_symbol>/<start_date>/<end_date>/')
-def get_history(company_symbol, start_date, end_date):
-	return engine.get_share_history(company_symbol, start_date, end_date)

@@ -17,6 +17,7 @@ def make_celery(app):
     return celery
 
 #Example of how celerybeat schedule should be organized
+
 # 'add-every-30-seconds': {
 #     'task': 'app.tasks.add',
 #     'schedule': timedelta(seconds=5),
@@ -44,35 +45,29 @@ celery = make_celery(app)
 def store_tweets_in_database():
     for company in models.Company.query.filter(models.Company.retrieved_data==False).all():
         company_id_start = company.id
-        print "---\nLooking at " + company.name + "\n---\n"
-        tweets, tweets_list = engine.twit_search(company.name)
-        if tweets is None:
-            print "Twitter api is overused"
+        if store_tweets_by_company_id(company.id):
+            print "---\n" + company.name + "'s Tweets \n---"
+            for t in models.Tweet.query.filter_by(company_id=company.id):
+                print(t.name + " : " +str(t.sentiment))
+            company.retrieved_data = True
+        else:
             print "---\nStopping at company " + str(company_id_start) + " : " + company.name + "\n---\n"
-            return
-
-        # related_words = generate_concepts_for_company(company.id, tweets_list)
-
-        # if related_words is None:
-        #     company_id_start = company.id
-        #     print "No related words"
-        #     print "---\nStopping at company " + str(company_id_start) + " : " + company.name + "\n---\n"
-        #     return
-
-        for tweet in tweets:
-            if not store_sentiment_for_tweet(company.id, tweet):
-                print "Failed to store sentiment"
-                print "---\nStopping at company " + str(company_id_start) + " : " + company.name + "\n---\n"
-                return
-
-        print "---\n" + company.name + "'s Tweets \n---"
-        for t in models.Tweet.query.filter_by(company_id=company.id):
-            print(t.name + " : " +str(t.sentiment))
-        company.retrieved_data = True
-
     # at the end set them all back to false
     for company in models.Company.query.all():
         company.retrieved_data = False
+
+def store_tweets_by_company_id(company_id):
+    print "---\nLooking at " + str(company_id) + "\n---\n"
+    tweets, tweets_list = engine.twit_search(company.name)
+    if tweets is None:
+        print "Twitter api is overused"
+        return False
+    for tweet in tweets:
+        if not store_sentiment_for_tweet(company.id, tweet):
+            print "Failed to store sentiment"
+            return False
+    return True
+
 
 def store_sentiment_for_tweet(company_id, tweet):
     sentiment = get_sentiment(company_id, tweet['text'])
@@ -120,6 +115,9 @@ def get_sentiment(company_id, text):
     #Return none when all api keys are exhausted
     return None
 
+"""
+Deprecated
+"""
 def generate_concepts_for_company(company_id, tweets):
     all_tweets_as_string = ' '.join(tweets)
     alchemyapi = AlchemyAPI()

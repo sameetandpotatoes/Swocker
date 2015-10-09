@@ -16,7 +16,6 @@ def find_relevant_key(name):
 		'corp.',
 		'corporation',
 		'group'
-		#TODO add more words here or even do this in a separate script
 	]
 	for f in fluff:
 		if f in array:

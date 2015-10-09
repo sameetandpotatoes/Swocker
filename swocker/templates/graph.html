@@ -61,7 +61,7 @@
 					.enter()
 					.append("text")
 					.text(function(d) { return d["sentiment"]; })
-					.attr("x", function(d) { return xScale(Date.parse(d["date"])) - 50; })
+					.attr("x", function(d) { return xScale(Date.parse(d["date"])); })
 					.attr("y", function(d) { return yScale(d["sentiment"]) + 5; })
 					.attr("font-family", "Source Sans Pro")
 					.attr("font-size", "1.0em")
@@ -90,7 +90,7 @@
 				var stockgraph = d3.svg.line()
 						.x(function(d) { return xScale(Date.parse(d["Date"])); })
 						.y(function(d) { return yScale2(d["Close"]); });
-				svg.append("path").style("stroke", "red").attr("d", stockgraph(stockdata["history"]));
+				svg.append("path").style("stroke", "red").attr("d", stockgraph(stockdata["history"])).attr("fill","#FFFFFF");
 				svg.append("g").attr("class", "axis").attr("transform", "translate(0," + h + ")").call(xAxis);
 				svg.append("g").attr("class", "axis").attr("transform", "translate(" + 0 + ",0)").call(yAxis);
 				svg.append("g").attr("class", "axis").attr("transform", "translate(" + w + " ,0)").style("fill", "red").call(yAxis2);
