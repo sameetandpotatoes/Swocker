@@ -20,7 +20,6 @@ Install `virtualenv`:
 
 Install [`mysql (5.5)`](https://dev.mysql.com/downloads/mysql/5.5.html)
 
-
 Downloading the Code
 ===
 
