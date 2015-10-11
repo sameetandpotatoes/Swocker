@@ -36,11 +36,13 @@
 				var rawJSON = JSON.parse($("#hiddendata").text());
 				var tweets = rawJSON["tweets"];
 				var stockdata = rawJSON["stocks"];
-				var min_date = Date.parse(tweets[0]["date"]);
-				var max_date = Date.parse(tweets[tweets.length - 1]["date"]);
+				var max_date = Date.parse(new Date());
+				var min_date = Date.parse(stockdata["history"][stockdata["history"].length-1]["Date"]);
 
 				var xScale = d3.time.scale().domain([min_date, max_date]).range([0, w]);
-				var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+				var xAxis = d3.svg.axis().scale(xScale).orient("bottom").tickFormat(function(d){
+					return d.toISOString().slice(0,10);
+				});
 				var yScale = d3.scale.linear().domain([-1, 1]).range([h, 0]);
 				var yScale2 = d3.scale.linear().domain([stockdata["min"], stockdata["max"]]).range([h, 0]);
 				var yAxis = d3.svg.axis().scale(yScale).orient("left");

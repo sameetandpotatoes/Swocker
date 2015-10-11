@@ -3,7 +3,7 @@ from swocker import db, models, engine
 from flask import Flask
 from datetime import timedelta
 from alchemyapi import AlchemyAPI
-
+import IPython
 def make_celery(app):
     celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'])
     celery.conf.update(app.config)
@@ -45,7 +45,7 @@ celery = make_celery(app)
 def store_tweets_in_database():
     for company in models.Company.query.filter(models.Company.retrieved_data==False).all():
         company_id_start = company.id
-        if store_tweets_by_company_id(company.id):
+        if store_tweets_by_company(company):
             print "---\n" + company.name + "'s Tweets \n---"
             for t in models.Tweet.query.filter_by(company_id=company.id):
                 print(t.name + " : " +str(t.sentiment))
@@ -56,8 +56,8 @@ def store_tweets_in_database():
     for company in models.Company.query.all():
         company.retrieved_data = False
 
-def store_tweets_by_company_id(company_id):
-    print "---\nLooking at " + str(company_id) + "\n---\n"
+def store_tweets_by_company(company):
+    print "---\nLooking at " + str(company.name) + "\n---\n"
     tweets, tweets_list = engine.twit_search(company.name)
     if tweets is None:
         print "Twitter api is overused"
