@@ -2,6 +2,14 @@ from swocker import engine
 from datetime import datetime, timedelta
 import json
 import IPython
+
+"""
+Refresh tweets if and only if the most recent tweet is not the current date
+"""
+def refresh_tweets(date):
+    return date != datetime.now().strftime("%Y-%m-%d")
+
+
 def format_tweets_for_company(key, tweets):
     tweet_data = []
 
