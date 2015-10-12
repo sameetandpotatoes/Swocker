@@ -1,7 +1,7 @@
 URL
 ======
 
-http://swocker-ssapra.rhccloud.com
+http://swocker-ssapra.rhcloud.com
 
 Project Description
 ======
