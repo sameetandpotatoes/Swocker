@@ -1,3 +1,22 @@
+URL
+======
+
+http://swocker-ssapra.rhccloud.com
+
+Project Description
+======
+
+The goal of this project was to map twitter sentiments to a company to actual Twitter stock prices. To accomplish this, we wrote a Flask-based web application with a SQL database. We used Twitter's API and Yahoo's stock API. Our database has a Company and a Tweet model with a "has_many" relationship (i.e a Company has many Tweets).
+
+Advantages of using a database include really fast indexing of data, and also the potential to store a lot more than a week's worth of historical Twitter data.
+
+Screenshots
+=======
+
+![](https://copy.com/b34zK2narGYXH2jF)
+![](https://copy.com/rtMqw9Oh1FemdFvY)
+
+
 Dependencies:
 =======
 Install `command line tools`:
