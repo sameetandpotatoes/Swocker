@@ -10,7 +10,7 @@ def refresh_tweets(date):
     return date != datetime.now().strftime("%Y-%m-%d")
 
 
-def format_tweets_for_company(key, tweets):
+def format_tweets_for_company(name, key, tweets):
     tweet_data = []
 
     for company_tweet in tweets:
@@ -42,5 +42,5 @@ def format_tweets_for_company(key, tweets):
         company_json["min"] = min_stock
         company_json['history'] = company_data
         company_data = company_json
-    result = {'tweets': tweet_data, 'stocks': company_data }
+    result = {'name': name, 'tweets': tweet_data, 'stocks': company_data }
     return result

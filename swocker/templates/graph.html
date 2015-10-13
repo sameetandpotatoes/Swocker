@@ -18,6 +18,7 @@
 				<div class="btn search">Search</div>
 			</div>
 		</header>
+		<h1 class="text-header">Visualization for {{data["name"]}}</h1>
     <div id="hiddendata" style="display: none;">{{data}}</div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
     <script type="text/javascript">
@@ -34,6 +35,8 @@
 				var h = (percentage_of_height * $(window).height()) - margin.top - margin.bottom;
 
 				var rawJSON = JSON.parse($("#hiddendata").text());
+				var name = rawJSON["name"];
+				$(".text-header").text("Visualization for " + name);
 				var tweets = rawJSON["tweets"];
 				var stockdata = rawJSON["stocks"];
 				var max_date = Date.parse(new Date());

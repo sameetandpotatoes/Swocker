@@ -11,6 +11,13 @@ header > h1{
   margin: 0 0.5em;
   width: 200px;
 }
+.text-header{
+  font: 2em 'Source Sans Pro';
+  width: 100%;
+  display: block;
+  margin: 1.25em auto;
+  text-align: center;
+}
 header > .searchBox{
   width: 80%;
 }
